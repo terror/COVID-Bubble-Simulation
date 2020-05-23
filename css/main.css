@@ -1,0 +1,12 @@
+.main {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+#navbar-example3 {
+	position: relative;
+}
+
+.guide {
+	margin-bottom: 6em;
+}
