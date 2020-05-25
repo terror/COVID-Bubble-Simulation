@@ -14,6 +14,17 @@ success.setAttribute('class', 'alert alert-success');
 success.style.width = '65%';
 success.style.margin = 'auto';
 
+// spinner
+let spinnerDiv = document.createElement('div');
+let spinner = document.createElement('div');
+let spinnerSpan = document.createElement('span');
+spinnerDiv.setAttribute('class', 'd-flex justify-content-center');
+spinner.setAttribute('class', 'spinner-border');
+spinnerSpan.setAttribute('class', 'sr-only');
+spinner.appendChild(spinnerSpan);
+spinnerDiv.appendChild(spinner);
+spinnerDiv.style.margin = '10px 0 0 0';
+
 // can prob do this a better way ...
 submitButton.addEventListener(
 	'click',
@@ -28,10 +39,16 @@ submitButton.addEventListener(
 			error.innerHTML = 'Invalid email. Please try again.';
 			document.getElementById('header').appendChild(error);
 		} else {
-			if (error.innerHTML != "")
+			// Check and Remove error
+			if (error.innerHTML != '') {
 				document.getElementById('header').removeChild(error);
+			}
+
+			// Add success and spinner
 			success.innerHTML = 'Success! Redirecting...';
-			document.getElementById('header').appendChild(success);
+			let header = document.getElementById('header');
+			header.appendChild(success);
+			header.appendChild(spinnerDiv);
 
 			// Redirect to simulation page after 3 seconds
 			window.setTimeout(function() {
