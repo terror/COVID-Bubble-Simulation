@@ -28,13 +28,14 @@ submitButton.addEventListener(
 			error.innerHTML = 'Invalid email. Please try again.';
 			document.getElementById('header').appendChild(error);
 		} else {
+			if (error.innerHTML != "")
+				document.getElementById('header').removeChild(error);
 			success.innerHTML = 'Success! Redirecting...';
-			document.getElementById('header').removeChild(error);
 			document.getElementById('header').appendChild(success);
 
 			// Redirect to simulation page after 3 seconds
 			window.setTimeout(function() {
-				window.location.href = 'simulation.html';
+				window.location.replace('simulation.html');
 			}, 3000);
 		}
 		e.preventDefault();
