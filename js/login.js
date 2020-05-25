@@ -31,6 +31,11 @@ submitButton.addEventListener(
 			success.innerHTML = 'Success! Redirecting...';
 			document.getElementById('header').removeChild(error);
 			document.getElementById('header').appendChild(success);
+
+			// Redirect to simulation page after 3 seconds
+			window.setTimeout(function() {
+				window.location.href = 'simulation.html';
+			}, 3000);
 		}
 		e.preventDefault();
 	},
