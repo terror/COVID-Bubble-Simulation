@@ -14,11 +14,14 @@ main {
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    margin: 0px 100px 20px 100px;
-    justify-content: space-evenly;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	margin: 0px 100px 20px 100px;
+}
+
+form #speed {
+	margin-bottom: 20px;
 }
 
 header {
