@@ -9,7 +9,7 @@ let noBubbles = 70; // number of bubbles
 let noStatic = 40; // number of static bubbles
 let sickRatio = 0.2; // ratio of starting sick bubbles. 0 = 0%, 1 = 100%
 let speed = 1; // speed constant (unitless)
-let form = document.getElementById('form');
+let canvasSize = document.getElementById('canvasSize');
 
 let sickCounter = 0;
 let bubbles = [];
@@ -59,13 +59,16 @@ document.getElementById('submit').addEventListener(
 	function(e) {
 		if (!ratioCheck());
 		else {
-			console.log('swag');
-			let canvasSize = document.getElementById('canvasSize');
-			// canvas.width = canvasSize.value == 'Small' ? 300 : canvasSize.value == 'Medium' ? 500 : 700;
-			// canvas.height =
-			//	canvasSize.value == 'Small'
-			//		? 500
-			//		: canvasSize.value == 'Medium' ? window.innerWidth : window.innerWidth + 200;
+			if (canvasSize.value == 'small') {
+				canvas.width = 300;
+				canvas.height = 500;
+			} else if (canvasSize.value == 'medium') {
+				canvas.width = 500;
+				canvas.height = window.innerWidth;
+			} else {
+				canvas.width = 700;
+				canvas.height = window.innerWidth + 200;
+			}
 			bubbles = [];
 			radius = parseInt(document.getElementById('bubbleSize').value);
 			noBubbles = parseInt(document.getElementById('numBubbles').value);
