@@ -19,8 +19,7 @@
         <main>
             <form id="form">
                 <label for="canvasSize">Choose the size of the canvas: </label>
-                <select id = "canvasSize" class="form-control" name="canvasSize" required>
-                    <option disabled selected value></option>
+                <select class="form-control" name="canvasSize" required>
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
@@ -32,9 +31,9 @@
                 <label for="staticBubbles">Choose the number of static bubbles on the canvas: </label>
                 <input class="form-control" name="staticBubbles" id="staticBubbles" type="number" min="1" max="500" required>
                 <label for="ratio">Initial ratio of sick to healthy bubbles: </label>
-                <input class="form-control" name="ratio" id="ratio" pattern="[0]{1}.[1-9]{1}" type="text" required>
+                <input class="form-control" name="ratio" id="ratio" type="text" required>
                 <label for="speed">Choose the speed of the simulation: </label>
-                <input class="form-control" name="speed" id="speed" type="number" min="0" max="5" required>
+                <input class="form-control" name="speed" id="speed" type="number" min="0" max="5" value="0" required>
                 <input class="btn btn-primary mb-2"type="submit" id="submit">
             </form>
             <canvas tabindex='1' ></canvas>
