@@ -1,5 +1,5 @@
-const canvas = document.getElementsByTagName('canvas')[0];
-const context = canvas.getContext('2d');
+let canvas = document.getElementsByTagName('canvas')[0];
+let context = canvas.getContext('2d');
 
 canvas.height = 500; // in pixels
 canvas.width = window.innerWidth;
@@ -9,11 +9,10 @@ let noBubbles = 70; // number of bubbles
 let noStatic = 40; // number of static bubbles
 let sickRatio = 0.2; // ratio of starting sick bubbles. 0 = 0%, 1 = 100%
 let speed = 1; // speed constant (unitless)
-let paused = true;
-let btn = document.getElementById('submit');
+let form = document.getElementById('form');
 
 let sickCounter = 0;
-const bubbles = [];
+let bubbles = [];
 
 for (let i = 0; i < noBubbles; i++) {
 	let isSick = false;
@@ -29,7 +28,7 @@ for (let i = 0; i < noBubbles; i++) {
 		speed = 0;
 	}
 
-	const newBubble = new Bubble(radius, speed, isSick);
+	let newBubble = new Bubble(radius, speed, isSick);
 
 	// Ensures that no bubbles spawn on top of each other initially.
 	for (let bubble of bubbles) {
@@ -41,8 +40,9 @@ for (let i = 0; i < noBubbles; i++) {
 }
 
 function animate() {
-    if(paused)
+    if(!form.checkValidity())
         return;
+    
 	requestAnimationFrame(animate);
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -55,31 +55,22 @@ function animate() {
 function ratioCheck()
 {
     let txt = document.getElementById('ratio').innerHTML
-    if (parseInt(txt) <= 1 && parseInt(txt) >= 0 && /^\d+\.\d{0,2}$/.test(txt))
-        return true;
-    return true;
+    return parseInt(txt) <= 1 && parseInt(txt) >= 0;
 }
 
-btn.addEventListener('submit', function(e) {
-    if (!ratioCheck())
-        return false;
-    let canvasSize = document.getElementById('canvasSize').innerHTML;
-    paused = false;
-    if (canvasSize == "small")
+form.addEventListener('submit', function(e) {
+    if (!ratioCheck());     
+    else
     {
-        height = 250;
-        width = 500;
+        let canvasSize = document.getElementById('canvasSize').innerHTML;
+        canvas.width = canvasSize == "Small" ? 300 : canvasSize == "Medium" ? 500 : 700;
+        canvas.height = canvasSize == "Small" ? 500 : canvasSize == "Medium" ? window.innerWidth : window.innerWidth + 200;
+        radius = parseInt(document.getElementById('bubbleSize').innerHTML);
+        noBubbles = parseInt(document.getElementById('numBubbles').innerHTML);
+        noStatic = parseInt(document.getElementById('staticBubbles').innerHTML);
+        sickRatio = parseFloat(document.getElementById('ratio').innerHTML);
+        speed = parseInt(document.getElementById('speed').innerHTML);
     }
-    else if (canvasSize == "large")
-    {
-        height = 750;
-        width = window.innerWidth;
-    }
-    radius = parseInt(document.getElementById('bubbleSize').innerHTML);
-    noBubbles = parseInt(document.getElementById('numBubbles').innerHTML);
-    noStatic = parseInt(document.getElementById('staticBubbles').innerHTML);
-    sickRatio = parseFloat(document.getElementById('ratio').innerHTML);
-    speed = parseInt(document.getElementById('speed').innerHTML);
     e.preventDefault();
 }, false);
 
