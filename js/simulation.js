@@ -46,6 +46,7 @@ function animate() {
 	for (let bubble of bubbles) {
 		// To update itself, a bubble needs to know the state of all bubbles
 		bubble.update(bubbles);
+		document.getElementById('number').innerHTML = sickCounter;
 	}
 }
 
@@ -60,16 +61,17 @@ document.getElementById('submit').addEventListener(
 		if (!ratioCheck());
 		else {
 			if (canvasSize.value == 'small') {
-				canvas.width = 300;
-				canvas.height = 500;
-			} else if (canvasSize.value == 'medium') {
 				canvas.width = 500;
-				canvas.height = window.innerWidth;
-			} else {
+				canvas.height = 300;
+			} else if (canvasSize.value == 'medium') {
 				canvas.width = 700;
-				canvas.height = window.innerWidth + 200;
+				canvas.height = 500;
+			} else {
+				canvas.width = 900;
+				canvas.height = 700;
 			}
 			bubbles = [];
+			sickCounter = 0;
 			radius = parseInt(document.getElementById('bubbleSize').value);
 			noBubbles = parseInt(document.getElementById('numBubbles').value);
 			noStatic = parseInt(document.getElementById('staticBubbles').value);
@@ -100,6 +102,7 @@ document.getElementById('submit').addEventListener(
 				}
 				bubbles.push(newBubble); // add newBubble to the bubbles array
 			}
+			document.getElementById('number').innerHTML = sickCounter;
 			animate();
 		}
 		e.preventDefault();
