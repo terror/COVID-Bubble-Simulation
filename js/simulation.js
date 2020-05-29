@@ -1,18 +1,19 @@
 let canvas = document.getElementsByTagName('canvas')[0];
 let context = canvas.getContext('2d');
-
-canvas.height = 500; // in pixels
-canvas.width = window.innerWidth;
-
 let radius = 10; // in pixels
 let noBubbles = 70; // number of bubbles
 let noStatic = 40; // number of static bubbles
 let sickRatio = 0.2; // ratio of starting sick bubbles. 0 = 0%, 1 = 100%
 let speed = 1; // speed constant (unitless)
 let canvasSize = document.getElementById('canvasSize');
-
+let timer = document.getElementById('time');
 let sickCounter = 0;
 let bubbles = [];
+
+canvas.height = 500; // in pixels
+canvas.width = window.innerWidth;
+timer.innerHTML = 0;
+let interval = setInterval(myTimer, 1000 / speed);
 
 for (let i = 0; i < noBubbles; i++) {
 	let isSick = false;
@@ -55,6 +56,16 @@ function ratioCheck() {
 	return parseInt(txt.value) <= 1 && parseInt(txt.value) >= 0;
 }
 
+function myTimer() {
+	if (sickCounter == noBubbles) {
+		timer.parentElement.style.display = 'none';
+		document.getElementById('result').innerHTML = timer.innerHTML;
+		clearInterval(interval);
+	} else {
+		timer.innerHTML++;
+	}
+}
+
 document.getElementById('submit').addEventListener(
 	'click',
 	function(e) {
@@ -77,6 +88,9 @@ document.getElementById('submit').addEventListener(
 			noStatic = parseInt(document.getElementById('staticBubbles').value);
 			sickRatio = parseFloat(document.getElementById('ratio').value);
 			speed = parseInt(document.getElementById('speed').value);
+
+			timer.innerHTML = 0;
+			let interval = setInterval(myTimer, 1000 / speed);
 
 			for (let i = 0; i < noBubbles; i++) {
 				let isSick = false;
