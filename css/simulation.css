@@ -34,8 +34,21 @@ canvas {
 	width: 100%;
 }
 
+.jumbotron {
+	margin: 3em auto auto auto;
+	width: 65%;
+}
+
+.navbar {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 @media only screen and (max-width: 700px) {
 	main {
+		width: 90%;
+	}
+
+	.jumbotron {
 		width: 90%;
 	}
 }

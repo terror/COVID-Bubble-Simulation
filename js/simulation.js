@@ -70,6 +70,7 @@ document.getElementById('submit').addEventListener(
 	'click',
 	function(e) {
 		if (!ratioCheck());
+		else if (canvasSize.value == "");
 		else {
 			if (canvasSize.value == 'small') {
 				canvas.width = 500;
