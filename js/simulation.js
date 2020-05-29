@@ -59,7 +59,7 @@ function ratioCheck() {
 function myTimer() {
 	if (sickCounter == noBubbles) {
 		timer.parentElement.style.display = 'none';
-		document.getElementById('result').innerHTML = timer.innerHTML;
+		document.getElementById('result').innerHTML = timer.innerHTML + ' seconds';
 		clearInterval(interval);
 	} else {
 		timer.innerHTML++;
