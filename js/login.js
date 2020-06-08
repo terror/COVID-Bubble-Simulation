@@ -1,6 +1,6 @@
-let passwordField = document.getElementById('password');
-let emailField = document.getElementById('email');
-let submitButton = document.getElementById('submit');
+const passwordField = document.getElementById('password');
+const emailField = document.getElementById('email');
+const submitButton = document.getElementById('submit');
 
 // error
 let error = document.createElement('div');
@@ -28,7 +28,7 @@ spinnerDiv.style.margin = '10px 0 0 0';
 // can prob do this a better way ...
 submitButton.addEventListener(
 	'click',
-	function(e) {
+	(e) => {
 		if (!validateEmail(emailField.value) && !validatePassword(passwordField.value)) {
 			error.innerHTML = 'Invalid email and password. Please try again.';
 			document.getElementById('header').appendChild(error);
@@ -60,12 +60,12 @@ submitButton.addEventListener(
 	false
 );
 
-function validateEmail(email) {
+validateEmail = (email) => {
 	const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	return re.test(String(email).toLowerCase());
-}
+};
 
 // 8 characters and at least one number
-function validatePassword(pw) {
+validatePassword = (pw) => {
 	return /[a-z]/.test(pw) && /[0-9]/.test(pw) && pw.length > 8;
-}
+};

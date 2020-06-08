@@ -1,12 +1,13 @@
-let canvas = document.getElementsByTagName('canvas')[0];
-let context = canvas.getContext('2d');
+const canvas = document.getElementsByTagName('canvas')[0];
+const context = canvas.getContext('2d');
+const canvasSize = document.getElementById('canvasSize');
+const timer = document.getElementById('time');
+
 let radius = 10; // in pixels
 let noBubbles = 70; // number of bubbles
 let noStatic = 40; // number of static bubbles
 let sickRatio = 0.2; // ratio of starting sick bubbles. 0 = 0%, 1 = 100%
 let speed = 1; // speed constant (unitless)
-let canvasSize = document.getElementById('canvasSize');
-let timer = document.getElementById('time');
 let sickCounter = 0;
 let bubbles = [];
 
@@ -15,32 +16,7 @@ canvas.width = window.innerWidth;
 timer.innerHTML = 0;
 let interval = setInterval(myTimer, 1000 / speed);
 
-for (let i = 0; i < noBubbles; i++) {
-	let isSick = false;
-
-	if (i < noBubbles * sickRatio) {
-		// the first X bubbles will be sick
-		isSick = true;
-		sickCounter++;
-	}
-
-	if (i > noBubbles - noStatic) {
-		// the last Y bubbles will be static
-		speed = 0;
-	}
-
-	let newBubble = new Bubble(radius, speed, isSick);
-
-	// Ensures that no bubbles spawn on top of each other initially.
-	for (let bubble of bubbles) {
-		while (newBubble.isColliding(bubble)) {
-			newBubble.positionRandomly();
-		}
-	}
-	bubbles.push(newBubble); // add newBubble to the bubbles array
-}
-
-function animate() {
+animate = () => {
 	requestAnimationFrame(animate);
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -49,12 +25,39 @@ function animate() {
 		bubble.update(bubbles);
 		document.getElementById('number').innerHTML = sickCounter;
 	}
-}
+};
 
-function ratioCheck() {
-	let txt = document.getElementById('ratio');
+loadBubbles = (bubbles) => {
+	for (let i = 0; i < noBubbles; i++) {
+		let isSick = false;
+
+		if (i < noBubbles * sickRatio) {
+			// the first X bubbles will be sick
+			isSick = true;
+			sickCounter++;
+		}
+
+		if (i > noBubbles - noStatic) {
+			// the last Y bubbles will be static
+			speed = 0;
+		}
+
+		let newBubble = new Bubble(radius, speed, isSick);
+
+		// Ensures that no bubbles spawn on top of each other initially.
+		for (let bubble of bubbles) {
+			while (newBubble.isColliding(bubble)) {
+				newBubble.positionRandomly();
+			}
+		}
+		bubbles.push(newBubble); // add newBubble to the bubbles array
+	}
+};
+
+ratioCheck = () => {
+	const txt = document.getElementById('ratio');
 	return parseInt(txt.value) <= 1 && parseInt(txt.value) >= 0;
-}
+};
 
 function myTimer() {
 	if (sickCounter == noBubbles) {
@@ -66,11 +69,13 @@ function myTimer() {
 	}
 }
 
+loadBubbles(bubbles);
+
 document.getElementById('submit').addEventListener(
 	'click',
-	function(e) {
+	(e) => {
 		if (!ratioCheck());
-		else if (canvasSize.value == "");
+		else if (canvasSize.value == '');
 		else {
 			if (canvasSize.value == 'small') {
 				canvas.width = 500;
@@ -92,31 +97,7 @@ document.getElementById('submit').addEventListener(
 
 			timer.innerHTML = 0;
 			let interval = setInterval(myTimer, 1000 / speed);
-
-			for (let i = 0; i < noBubbles; i++) {
-				let isSick = false;
-
-				if (i < noBubbles * sickRatio) {
-					// the first X bubbles will be sick
-					isSick = true;
-					sickCounter++;
-				}
-
-				if (i > noBubbles - noStatic) {
-					// the last Y bubbles will be static
-					speed = 0;
-				}
-
-				let newBubble = new Bubble(radius, speed, isSick);
-
-				// Ensures that no bubbles spawn on top of each other initially.
-				for (let bubble of bubbles) {
-					while (newBubble.isColliding(bubble)) {
-						newBubble.positionRandomly();
-					}
-				}
-				bubbles.push(newBubble); // add newBubble to the bubbles array
-			}
+			loadBubbles(bubbles);
 			document.getElementById('number').innerHTML = sickCounter;
 			animate();
 		}
